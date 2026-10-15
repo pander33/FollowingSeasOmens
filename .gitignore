@@ -1,0 +1,13 @@
+bin/
+obj/
+dist/
+.vs/
+.idea/
+*.user
+
+# Working documents, kept out of the public repository (as in FollowingSeasCoop).
+CLAUDE.md
+AGENTS.md
+
+# Decompiled game code must never be committed.
+_decompiled/

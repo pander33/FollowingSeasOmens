@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Following Seas Omens — BepInEx 5 plugin: rare night events in the sky and the sea.
+    The game is Unity 6000.3 on Mono and its assemblies target .NET Standard 2.1, so this does too.
+    Builds straight into the game's BepInEx/plugins/FollowingSeasOmens folder. See README.md.
+  -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>FollowingSeasOmens</AssemblyName>
+    <RootNamespace>FollowingSeasOmens</RootNamespace>
+    <LangVersion>9.0</LangVersion>
+    <!-- The same number as Plugin.Version. -->
+    <Version>0.1.0</Version>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <Deterministic>true</Deterministic>
+    <DebugType>none</DebugType>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <Configuration Condition="'$(Configuration)'==''">Release</Configuration>
+
+    <!-- Absolute path to the game copy the mod is built into. Override with -p:GameDir=... -->
+    <GameDir Condition="'$(GameDir)'==''">B:\FollowingSeasModTest</GameDir>
+    <ManagedDir>$(GameDir)\Following Seas_Data\Managed</ManagedDir>
+    <BepInExCore>$(GameDir)\BepInEx\core</BepInExCore>
+    <PluginDir>$(GameDir)\BepInEx\plugins\FollowingSeasOmens</PluginDir>
+    <OutputPath>$(PluginDir)\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- BepInEx (do not copy: provided by the loader). -->
+    <Reference Include="BepInEx"><HintPath>$(BepInExCore)\BepInEx.dll</HintPath><Private>false</Private></Reference>
+
+    <!-- Game + Unity (do not copy: provided by the game). -->
+    <Reference Include="Assembly-CSharp"><HintPath>$(ManagedDir)\Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Enviro3.Runtime"><HintPath>$(ManagedDir)\Enviro3.Runtime.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Crest"><HintPath>$(ManagedDir)\Crest.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Unity.InputSystem"><HintPath>$(ManagedDir)\Unity.InputSystem.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(ManagedDir)\UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(ManagedDir)\UnityEngine.IMGUIModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.TextRenderingModule"><HintPath>$(ManagedDir)\UnityEngine.TextRenderingModule.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <!-- Keep nothing in the plugin folder but the plugin itself. -->
+  <Target Name="StripFacades" AfterTargets="Build">
+    <ItemGroup>
+      <_AllDlls Include="$(OutputPath)*.dll" />
+      <_Strip Include="@(_AllDlls)" Exclude="$(OutputPath)FollowingSeasOmens.dll" />
+    </ItemGroup>
+    <Delete Files="@(_Strip)" />
+  </Target>
+
+</Project>
