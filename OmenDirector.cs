@@ -128,7 +128,8 @@ namespace FollowingSeasOmens
             if (enviro == null) return;
             float darkness = Darkness(enviro);
             foreach (var omen in _omens)
-                if (omen.Active || !Blocked(omen, false)) omen.Apply(enviro, darkness);
+                if (omen.Active || !Blocked(omen, false))
+                    omen.Apply(enviro, omen is DarkNight ? Mathf.InverseLerp(0.5f, 0.45f, enviro.solarTime) : darkness);
         }
 
         private void OnDestroy() => StopAll();
@@ -205,8 +206,8 @@ namespace FollowingSeasOmens
             return false;
         }
 
-        private static bool Conflict(Omen a, Omen b) => a is DarkNight ? b is BloodMoon || b is Aurora
-                                                       : b is DarkNight && (a is BloodMoon || a is Aurora);
+        private static bool Conflict(Omen a, Omen b) => a is DarkNight ? b is BloodMoon or Aurora or GlowingSea
+                                                       : b is DarkNight && a is BloodMoon or Aurora or GlowingSea;
 
         /// <summary>Next in the cycle: each omen alone, then all of them that go together, then none.</summary>
         private void Summon(EnviroManager enviro)

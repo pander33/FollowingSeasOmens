@@ -11,3 +11,8 @@ AGENTS.md
 
 # Decompiled game code must never be committed.
 _decompiled/
+Tools/AuroraAssets/Library/
+Tools/AuroraAssets/Temp/
+Tools/AuroraAssets/Logs/
+Tools/AuroraAssets/UserSettings/
+/.omo

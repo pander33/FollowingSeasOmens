@@ -28,7 +28,7 @@ as on any other night.
 ## 🧭 How it works
 
 - **Each night is rolled at dusk.** Every omen has its own chance, so most nights have none and a
-  few have two at once. A dark night never comes together with a blood moon or northern lights.
+  few have two at once. A dark night never comes together with a blood moon, northern lights or a glowing sea.
 - **An omen comes slowly** as the sky darkens, is strongest in the middle of the night, and fades
   at dawn.
 - **You are told.** A line comes up at the top of the screen, and the **captain's log** gets an entry
