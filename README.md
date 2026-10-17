@@ -22,8 +22,10 @@ Unofficial; not made or endorsed by Whipstaff Games.
 | **Glowing sea** | Glowing plankton: the bow wave, the wake and the breaking crests shine blue, and the water around them glows. |
 | **Dark night** | No moon, no stars, a black sky and a black sea. Without a lantern you see nothing. |
 
-The omens only change how the night looks. Your ship, the weather, the wind and the fish are the same
-as on any other night.
+With gameplay effects enabled, a blood moon brings more bites and larger fish without harder fights,
+northern lights make magnetic compasses tremble, and glowing feeding patches offer better fishing.
+The ship, weather and wind are unchanged. Dark night adds no hidden penalties: its danger is poor visibility.
+Disable `Gameplay / Enabled` to keep the visual omens without the new fishing and compass effects.
 
 ## 🧭 How it works
 
@@ -82,6 +84,30 @@ with the mod; open it in Notepad with the game closed.
 | `Keys / NightKey` | `None` | For testing: a key (for example `F10`) that moves the clock to the middle of the night, or by night to noon. It changes the time in your world. |
 | `Journal / WriteJournal` | `true` | Whether an omen writes an entry in the captain's log. |
 | `UI / Announce` | `true` | Whether the line at the top of the screen is shown. |
+| `Gameplay / Enabled` | `true` | Enable the new fishing and compass mechanics; visual omens remain when disabled. |
+| `BloodMoon / FishingEnabled` | `true` | More frequent bites and larger fish, without increased fighting difficulty. |
+| `BloodMoon / BiteMultiplier` | `1.5` | Bite frequency at full strength. |
+| `BloodMoon / SizeBiasMultiplier` | `0.65` | Smaller values favour larger fish within their normal size limits; `1` leaves size unchanged. |
+| `Aurora / CompassEnabled` | `true` | Magnetic compass disturbance during northern lights. |
+| `Aurora / CompassAmplitudeDegrees` | `8` | Maximum compass deviation at full strength. |
+| `GlowingSea / FishingPatchesEnabled` | `true` | Glowing feeding patches with a real local fishing bonus. |
+| `GlowingSea / PatchBiteMultiplier` | `1.5` | Bite frequency at the centre of a feeding patch. Combined fishing bonuses never exceed `2`. |
+
+Feeding patches are stable for the night and reward fishing inside them, not merely standing nearby.
+They do not guarantee a catch or increase fish size. The blood moon size bonus is retained by the catch
+after dawn. A dark night lasts until dawn and excludes all three bright omens.
+
+Trolling catches use the game's native cargo units rather than individual fish weights.
+Each quarter of the normalised size range crossed by the blood-moon bonus adds one cargo unit
+when that catch enters the hold. Ordinary catches still give one unit; the bonus is fixed at capture.
+The host sends the catch reward with the existing trolling-line state, and the collecting player's
+normal economy update carries the resulting hold change once.
+
+Gameplay rules in co-op come from the host. New gameplay effects require compatible Omens and Co-op
+builds on every participant; unsupported sessions keep only the available visual effects,
+and the BepInEx log says which player has not confirmed a compatible build.
+These gameplay additions are development changes, not part of the previously published 0.1.0 archives.
+In-game validation of the new fishing, compass, patch rendering and multiplayer paths is still required.
 
 Want to see omens often? Set a chance to `0.5` or `1`.
 

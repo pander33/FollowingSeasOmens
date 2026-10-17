@@ -69,7 +69,9 @@ namespace FollowingSeasOmens
                 _mat = new Material(shader) { mainTexture = _tex, renderQueue = 3000, hideFlags = HideFlags.HideAndDontSave };
                 _mesh = MakeMesh(great ? TopRed : TopPurple);
                 _mesh.hideFlags = HideFlags.HideAndDontSave;
-                float yaw = Random.Range(0f, 360f);
+                // In the northern sky: the curtains stand along the mesh's +z, and the game's north is the
+                // world's +z (a compass reads 0° there). One draw, as before, so the rest of the look stays.
+                float yaw = Random.Range(-35f, 35f);
 
                 _go = new GameObject("Omens Aurora") { hideFlags = HideFlags.HideAndDontSave };
                 _go.transform.SetParent(_parent, false);
