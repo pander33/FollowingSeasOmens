@@ -16,3 +16,13 @@ Tools/AuroraAssets/Temp/
 Tools/AuroraAssets/Logs/
 Tools/AuroraAssets/UserSettings/
 /.omo
+Tools/OmensShaders/Library/
+Tools/OmensShaders/Temp/
+Tools/OmensShaders/Logs/
+Tools/OmensShaders/UserSettings/
+Tools/OmensShaders/Build/
+Bundles/*.manifest
+Bundles/Bundles
+Tools/OmensShaders/*.csproj
+Tools/OmensShaders/*.sln
+Tools/OmensShaders/*.slnx

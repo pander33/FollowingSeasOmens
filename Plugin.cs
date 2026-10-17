@@ -19,6 +19,7 @@ namespace FollowingSeasOmens
 		internal static ConfigEntry<float> AuroraChance;
 		internal static ConfigEntry<float> GlowingSeaChance;
 		internal static ConfigEntry<float> DarkNightChance;
+		internal static ConfigEntry<float> MeteorsChance;
 		internal static ConfigEntry<float> FadeSeconds;
 		internal static ConfigEntry<string> SummonKey;
 		internal static ConfigEntry<string> NightKey;
@@ -39,11 +40,13 @@ namespace FollowingSeasOmens
 				"Chance that a night has glowing plankton in the sea, from 0 to 1.");
 			DarkNightChance = Config.Bind("Chance", "DarkNight", 0.08f,
 				"Chance that a night is pitch dark (no moon, no stars: only a lantern shows anything), from 0 to 1. " +
-				"Never on the same night as a blood moon, northern lights or glowing sea.");
+				"Never on the same night as another omen: if another one rolls, it wins.");
+			MeteorsChance = Config.Bind("Chance", "Meteors", 0.06f,
+				"Chance that a night has a meteor shower (falling stars, now and then a fireball), from 0 to 1.");
 			FadeSeconds = Config.Bind("Look", "FadeSeconds", 20f,
 				"How many seconds an omen takes to come and to go.");
 			SummonKey = Config.Bind("Keys", "SummonKey", "F9",
-				"Key that steps through the omens by hand: blood moon, northern lights, glowing sea, dark night, " +
+				"Key that steps through the omens by hand: blood moon, northern lights, glowing sea, dark night, meteor shower, " +
 				"all of them but the dark night, none (a UnityEngine.InputSystem.Key name; None switches it off). They show only at night.");
 			NightKey = Config.Bind("Keys", "NightKey", "None",
 				"For testing only: a key that moves the clock, by day to the middle of the night, by night to " +

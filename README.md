@@ -3,13 +3,13 @@
 [![Version](https://img.shields.io/badge/version-0.1.0-blue)](#-install)
 [![Game](https://img.shields.io/badge/game-Following%20Seas-1b2838?logo=steam&logoColor=white)](https://store.steampowered.com/app/2895440/)
 [![BepInEx](https://img.shields.io/badge/BepInEx-5.4.23%2B-orange)](https://github.com/BepInEx/BepInEx/releases)
-[![Omens](https://img.shields.io/badge/omens-4-purple)](#-the-omens)
+[![Omens](https://img.shields.io/badge/omens-5-purple)](#-the-omens)
 [![Status](https://img.shields.io/badge/status-early%20version-yellow)](#-if-something-goes-wrong)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 Now and then a night at sea in [Following Seas](https://store.steampowered.com/app/2895440/) is not like
 the others: a blood red moon rises, the northern lights burn across the sky, the sea glows in your wake,
-or the night is so dark that only a lantern shows anything.
+stars fall from the sky, or the night is so dark that only a lantern shows anything.
 
 Unofficial; not made or endorsed by Whipstaff Games.
 
@@ -20,6 +20,7 @@ Unofficial; not made or endorsed by Whipstaff Games.
 | **Blood moon** | A large full moon, dark red. The sky and the night light turn crimson. |
 | **Northern lights** | Curtains of green light across the sky, purple at the top; red in a great storm. |
 | **Glowing sea** | Glowing plankton: the bow wave, the wake and the breaking crests shine blue, and the water around them glows. |
+| **Meteor shower** | Every second or two a falling star flashes away from one point of the sky; now and then a slow green, orange or blue fireball throws sparks, flares, lights the deck and leaves a glowing train. |
 | **Dark night** | No moon, no stars, a black sky and a black sea. Without a lantern you see nothing. |
 
 With gameplay effects enabled, a blood moon brings more bites and larger fish without harder fights,
@@ -30,7 +31,7 @@ Disable `Gameplay / Enabled` to keep the visual omens without the new fishing an
 ## 🧭 How it works
 
 - **Each night is rolled at dusk.** Every omen has its own chance, so most nights have none and a
-  few have two at once. A dark night never comes together with a blood moon, northern lights or a glowing sea.
+  few have two at once. A dark night never comes together with another omen: if one rolls, it wins.
 - **An omen comes slowly** as the sky darkens, is strongest in the middle of the night, and fades
   at dawn.
 - **You are told.** A line comes up at the top of the screen, and the **captain's log** gets an entry
@@ -53,7 +54,7 @@ game mods.
    that `winhttp.dll` lies next to `Following Seas.exe`. Start the game once and close it: BepInEx
    makes its folders.
 3. **Put the mod in.** Create the folder `BepInEx\plugins\FollowingSeasOmens` and put
-   `FollowingSeasOmens.dll` into it.
+   `FollowingSeasOmens.dll` and `omens.bundle` (the meteor shower's shader) into it.
 4. **Start the game.** Load your world, wait for night, or press **F9** at night to see an omen at
    once (see [Keys](#-keys)).
 
@@ -64,7 +65,7 @@ nothing of it except the lines it wrote in the captain's log.
 
 | Key | What it does |
 |---|---|
-| **F9** | Calls the omens by hand, one press after another: blood moon → northern lights → glowing sea → dark night → all of them but the dark night → none. An omen called this way comes in 2 seconds. Pressed by day, it waits for the night. Nothing is written in the log. |
+| **F9** | Calls the omens by hand, one press after another: blood moon → northern lights → glowing sea → dark night → meteor shower → all of them but the dark night → none. An omen called this way comes in 2 seconds. Pressed by day, it waits for the night. Nothing is written in the log. |
 
 The keys do nothing while the game's menu is open.
 
@@ -79,6 +80,7 @@ with the mod; open it in Notepad with the game closed.
 | `Chance / Aurora` | `0.06` | The same for the northern lights. |
 | `Chance / GlowingSea` | `0.10` | The same for the glowing sea. |
 | `Chance / DarkNight` | `0.08` | The same for a dark night. |
+| `Chance / Meteors` | `0.06` | The same for a meteor shower. |
 | `Look / FadeSeconds` | `20` | How many seconds an omen takes to come and to go. |
 | `Keys / SummonKey` | `F9` | The key that calls the omens by hand. `None` switches it off. |
 | `Keys / NightKey` | `None` | For testing: a key (for example `F10`) that moves the clock to the middle of the night, or by night to noon. It changes the time in your world. |
@@ -116,6 +118,9 @@ Want to see omens often? Set a chance to `0.5` or `1`.
 - **Nothing happens at all.** Check that the file is at
   `BepInEx\plugins\FollowingSeasOmens\FollowingSeasOmens.dll` and that `BepInEx\LogOutput.log` has the
   line `Following Seas Omens ... loaded`. No such log file means BepInEx is not installed.
+- **No meteor shower, and the log says `Could not load ...omens.bundle` or `Meteor shower failed`.**
+  `omens.bundle` is missing from the mod's folder, or does not load in this version of the game. The
+  other omens are not affected.
 - **F9 shows a line, but the sky does not change.** It is day, or dawn is near: omens show only at
   night and are faint at dusk and dawn. Press F9 once and wait a few seconds; each press switches to
   the next omen.

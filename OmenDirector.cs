@@ -45,13 +45,14 @@ namespace FollowingSeasOmens
 
 		private void Start()
 		{
-			_omens = new Omen[] { new BloodMoon(), new Aurora(transform), new GlowingSea(), new DarkNight() };
+			_omens = new Omen[] { new BloodMoon(), new Aurora(transform), new GlowingSea(), new DarkNight(), new Meteors(transform) };
 			_chances = new Func<float>[]
 			{
 				() => Plugin.BloodMoonChance.Value,
 				() => Plugin.AuroraChance.Value,
 				() => Plugin.GlowingSeaChance.Value,
-				() => Plugin.DarkNightChance.Value
+				() => Plugin.DarkNightChance.Value,
+				() => Plugin.MeteorsChance.Value
 			};
 			_coop = new CoopLink(OnHostText);
 			_summonKey = ParseKey(Plugin.SummonKey.Value, "SummonKey");
@@ -160,18 +161,28 @@ namespace FollowingSeasOmens
 		/// Rolls the night's omens. The dice are the night's own (<see cref="NightNumber"/>): a world
 		/// loaded again in the same night — by the player, or by the game itself — gets the same omens
 		/// back. The log line is written only when night falls, not when a world comes into one: the
-		/// save already holds the line written at dusk.
+		/// save already holds the line written at dusk. The dark night is decided last: any other omen of
+		/// the night wins over it.
 		/// </summary>
 		private void RollTheNight(EnviroManager enviro, bool dusk)
 		{
 			int night = NightNumber(enviro);
 			var dice = new System.Random(unchecked(night * 486187739 + 1013904223));
-			string announced = null;
+			var rolls = new double[_omens.Length];
+			var seeds = new int[_omens.Length];
 			for (int i = 0; i < _omens.Length; i++)
 			{
-				// Both are drawn for every omen, rolled or not, so each keeps its own numbers.
-				double roll = dice.NextDouble();
-				int seed = dice.Next(1, int.MaxValue);
+				// Both are drawn for every omen, rolled or not, in the list's order, so each keeps its own numbers.
+				rolls[i] = dice.NextDouble();
+				seeds[i] = dice.Next(1, int.MaxValue);
+			}
+
+			string announced = null;
+			for (int n = 0; n < _omens.Length; n++)
+			{
+				int i = Decided(n);
+				double roll = rolls[i];
+				int seed = seeds[i];
 				Omen omen = _omens[i];
 				if (omen.Broken || Blocked(omen, true) || roll >= Mathf.Clamp01(_chances[i]())) continue;
 				omen.Wanted = true;
@@ -183,6 +194,13 @@ namespace FollowingSeasOmens
 			}
 
 			if (announced != null) Announce(announced);
+		}
+
+		/// <summary>The <paramref name="n"/>-th omen to decide: the list's order with the dark night moved last.</summary>
+		private int Decided(int n)
+		{
+			int dark = Array.FindIndex(_omens, o => o is DarkNight);
+			return dark < 0 || n < dark ? n : n == _omens.Length - 1 ? dark : n + 1;
 		}
 
 		/// <summary>
@@ -209,8 +227,8 @@ namespace FollowingSeasOmens
 		private static int NewSeed() => UnityEngine.Random.Range(1, int.MaxValue);
 
 		/// <summary>
-		/// A dark night has no moon and nothing alight in the sky, so it never shares the night with a blood
-		/// moon or northern lights (the blood moon also takes the same Enviro gradients). True when a
+		/// A dark night has no moon and nothing alight in the sky, so it never shares the night with any other
+		/// omen (the blood moon also takes the same Enviro gradients). True when a
 		/// conflicting omen is on the screen, or, with <paramref name="wanted"/>, already wanted.
 		/// </summary>
 		private bool Blocked(Omen omen, bool wanted)
@@ -221,9 +239,7 @@ namespace FollowingSeasOmens
 			return false;
 		}
 
-		private static bool Conflict(Omen a, Omen b) => a is DarkNight
-			? b is BloodMoon or Aurora or GlowingSea
-			: b is DarkNight && a is BloodMoon or Aurora or GlowingSea;
+		private static bool Conflict(Omen a, Omen b) => (a is DarkNight) != (b is DarkNight);
 
 		/// <summary>Next in the cycle: each omen alone, then all of them that go together, then none.</summary>
 		private void Summon(EnviroManager enviro)

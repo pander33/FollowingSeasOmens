@@ -39,13 +39,22 @@
     <Reference Include="Unity.InputSystem"><HintPath>$(ManagedDir)\Unity.InputSystem.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="UnityEngine"><HintPath>$(ManagedDir)\UnityEngine.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="UnityEngine.CoreModule"><HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.AssetBundleModule"><HintPath>$(ManagedDir)\UnityEngine.AssetBundleModule.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(ManagedDir)\UnityEngine.IMGUIModule.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="UnityEngine.TextRenderingModule"><HintPath>$(ManagedDir)\UnityEngine.TextRenderingModule.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="UnityEngine.PhysicsModule"><HintPath>$(ManagedDir)\UnityEngine.PhysicsModule.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="Unity.TextMeshPro"><HintPath>$(ManagedDir)\Unity.TextMeshPro.dll</HintPath><Private>false</Private></Reference>
   </ItemGroup>
 
-  <!-- Keep nothing in the plugin folder but the plugin itself. -->
+  <ItemGroup>
+    <!-- The Unity projects under Tools hold editor scripts and packages of their own. -->
+    <Compile Remove="Tools\**" />
+    <None Remove="Tools\**" />
+    <!-- The mod's own shaders, built from Tools/OmensShaders (see BuildBundle.cs). -->
+    <None Include="Bundles\omens.bundle" CopyToOutputDirectory="PreserveNewest" Link="omens.bundle" />
+  </ItemGroup>
+
+  <!-- Keep nothing in the plugin folder but the plugin itself and its bundle. -->
   <Target Name="StripFacades" AfterTargets="Build">
     <ItemGroup>
       <_AllDlls Include="$(OutputPath)*.dll" />
