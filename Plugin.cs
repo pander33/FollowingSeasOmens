@@ -11,7 +11,7 @@ namespace FollowingSeasOmens
 	{
 		public const string Guid = "com.followingseas.omens";
 		public const string Name = "Following Seas Omens";
-		public const string Version = "0.1.0";
+		public const string Version = "0.2.0";
 
 		internal static ManualLogSource Log;
 
