@@ -1,6 +1,6 @@
 # 🌙 Following Seas Omens
 
-[![Version](https://img.shields.io/badge/version-0.1.0-blue)](#-install)
+[![Version](https://img.shields.io/badge/version-0.2.0-blue)](#-install)
 [![Game](https://img.shields.io/badge/game-Following%20Seas-1b2838?logo=steam&logoColor=white)](https://store.steampowered.com/app/2895440/)
 [![BepInEx](https://img.shields.io/badge/BepInEx-5.4.23%2B-orange)](https://github.com/BepInEx/BepInEx/releases)
 [![Omens](https://img.shields.io/badge/omens-5-purple)](#-the-omens)
@@ -46,6 +46,12 @@ it (a little earlier or later, depending on where you sail). Look for the omens 
 
 You need Following Seas on Windows and **BepInEx 5** (x64, version 5.4.23 or newer), a free loader for
 game mods.
+
+Download [version 0.2.0](https://github.com/pander33/FollowingSeasOmens/releases/tag/v0.2.0):
+choose `FollowingSeasOmens-0.2.0.zip` with BepInEx included, or
+`FollowingSeasOmens-0.2.0-plugin-only.zip` if BepInEx is already installed.
+Close the game and unpack one archive into the game folder. When upgrading, replace both
+`FollowingSeasOmens.dll` and `omens.bundle`.
 
 1. **Close the game and find its folder.** In Steam: right-click Following Seas → **Manage** →
    **Browse local files**. It is the folder with `Following Seas.exe`.
@@ -97,7 +103,7 @@ with the mod; open it in Notepad with the game closed.
 
 Feeding patches are stable for the night and reward fishing inside them, not merely standing nearby.
 They do not guarantee a catch or increase fish size. The blood moon size bonus is retained by the catch
-after dawn. A dark night lasts until dawn and excludes all three bright omens.
+after dawn. A dark night lasts until dawn and excludes all other omens.
 
 Trolling catches use the game's native cargo units rather than individual fish weights.
 Each quarter of the normalised size range crossed by the blood-moon bonus adds one cargo unit
@@ -108,8 +114,10 @@ normal economy update carries the resulting hold change once.
 Gameplay rules in co-op come from the host. New gameplay effects require compatible Omens and Co-op
 builds on every participant; unsupported sessions keep only the available visual effects,
 and the BepInEx log says which player has not confirmed a compatible build.
-These gameplay additions are development changes, not part of the previously published 0.1.0 archives.
+These gameplay additions are included in 0.2.0, not in the previously published 0.1.0 archives.
 In-game validation of the new fishing, compass, patch rendering and multiplayer paths is still required.
+The meteor shader bundle was built with Unity 6000.4; loading it in the game's Unity 6000.3
+has not yet been verified. Back up your saves before trying this early version.
 
 Want to see omens often? Set a chance to `0.5` or `1`.
 
